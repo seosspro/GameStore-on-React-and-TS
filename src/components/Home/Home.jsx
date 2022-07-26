@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import QueryString from 'qs';
 
 import {
@@ -13,7 +13,6 @@ import Sort from '../Sort/Sort';
 import Preloader from '../GameBlock/Preloader';
 import GameBlock from '../GameBlock/GameBlock';
 import Pagination from '../Pagination/Pagination';
-import { SearchContext } from '../../App';
 import { list } from './../Sort/Sort';
 import { fetchGames } from '../../redux/slices/gamesSlice';
 
@@ -23,13 +22,11 @@ function Home() {
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
-    const { categoryId, sort, currentPage } = useSelector(
+    const { categoryId, sort, currentPage, searchValue } = useSelector(
         state => state.filter
     );
 
     const { items, status } = useSelector(state => state.games);
-
-    const { searchValue } = useContext(SearchContext);
 
     const onChangeCategory = React.useCallback(idx => {
         dispatch(setCategoryId(idx));
@@ -91,7 +88,11 @@ function Home() {
     useEffect(() => {
         getGames();
     }, [categoryId, sort.sortProperty, searchValue, currentPage]);
-    const games = items.map(obj => <GameBlock key={obj.id} {...obj} />);
+    const games = items.map(obj => (
+        <NavLink key={obj.id} to={`/Game/${obj.id}`}>
+            <GameBlock {...obj} />
+        </NavLink>
+    ));
     const skeletons = [...new Array(6)].map((_, index) => (
         <Preloader key={index} />
     ));

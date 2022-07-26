@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchGames = createAsyncThunk(
     'games/fetchGamesStatus',
-    async params => {
+    async (params, thunkAPI) => {
         const { order, sortBy, category, search, currentPage } = params;
         const { data } = await axios.get(
             `https://62977b578d77ad6f75041321.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`

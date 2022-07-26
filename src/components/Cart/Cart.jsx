@@ -2,12 +2,12 @@ import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import CartItem from './CartItem';
-import { clearItems } from '../../redux/slices/cartSlice';
+import { clearItems, selectCart } from '../../redux/slices/cartSlice';
 import CartEmpty from './CartEmpty';
 
 function Cart() {
     const dispatch = useDispatch();
-    const { totalPrice, items } = useSelector(state => state.cart);
+    const { totalPrice, items } = useSelector(selectCart);
 
     const onClickClear = () => {
         dispatch(clearItems());
@@ -132,7 +132,7 @@ function Cart() {
                                     />
                                 </svg>
 
-                                <NavLink to='/Home'>
+                                <NavLink to='/'>
                                     <span>Вернуться назад</span>
                                 </NavLink>
                             </a>

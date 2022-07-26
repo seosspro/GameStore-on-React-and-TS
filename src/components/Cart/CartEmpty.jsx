@@ -15,7 +15,7 @@ function CartEmpty() {
                         Для того, чтобы купить игру, перейди на главную
                         страницу.
                     </p>
-                    <NavLink to='/Home' className='button button--black'>
+                    <NavLink to='/' className='button button--black'>
                         <span>Вернуться назад</span>
                     </NavLink>
                 </div>
