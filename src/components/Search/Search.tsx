@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 
@@ -9,17 +9,17 @@ function Search() {
     const dispatch = useDispatch();
     const [value, setValue] = useState();
 
-    const inputRef = useRef();
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const onClickClear = () => {
-        dispatch(setSearchValue(''))
+        dispatch(setSearchValue(''));
         setValue('');
-        inputRef.current.focus();
+        inputRef.current?.focus();
     };
 
     const updateSearchValue = useCallback(
         debounce(str => {
-            dispatch(setSearchValue(str))
+            dispatch(setSearchValue(str));
         }, 300),
         []
     );

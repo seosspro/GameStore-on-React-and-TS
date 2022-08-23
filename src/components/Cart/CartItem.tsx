@@ -1,8 +1,22 @@
 import React from 'react';
 import { useDispatch } from 'react-redux/es/exports';
-import { addItem, minusItem,removeItem} from '../../redux/slices/cartSlice';
+import { addItem, minusItem, removeItem } from '../../redux/slices/cartSlice';
 
-function CartItem({ id, title, imageUrl, price, count }) {
+type CartItemProps = {
+    id: string;
+    title: string;
+    imageUrl: string;
+    price: number;
+    count: number;
+};
+
+const CartItem: React.FC<CartItemProps> = ({
+    id,
+    title,
+    imageUrl,
+    price,
+    count,
+}) => {
     const dispatch = useDispatch();
 
     const onClickPlus = () => {
@@ -78,7 +92,10 @@ function CartItem({ id, title, imageUrl, price, count }) {
                 <b>{price}</b>
             </div>
             <div className='cart__item-remove'>
-                <div onClick={onClickRemove} className='button button--outline button--circle'>
+                <div
+                    onClick={onClickRemove}
+                    className='button button--outline button--circle'
+                >
                     <svg
                         width='10'
                         height='10'
@@ -99,6 +116,6 @@ function CartItem({ id, title, imageUrl, price, count }) {
             </div>
         </div>
     );
-}
+};
 
 export default CartItem;

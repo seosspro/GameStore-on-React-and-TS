@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function FullGame() {
+const FullGame: React.FC = () => {
     const { id } = useParams();
-    const [game, setGame] = useState();
+    const [game, setGame] = useState<{
+        imageUrl: string;
+        title: string;
+        price: number;
+    }>();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,7 +29,7 @@ function FullGame() {
     }, []);
 
     if (!game) {
-        return 'Загрузка';
+        return <>Загрузка...</>;
     }
 
     return (
@@ -41,6 +45,6 @@ function FullGame() {
             <h4>{game.price}</h4>
         </div>
     );
-}
+};
 
 export default FullGame;

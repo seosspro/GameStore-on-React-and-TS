@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-function CartEmpty() {
+const CartEmpty: React.FC = () => {
     return (
         <div className='content'>
             <div className='container container--cart'>
                 <div className='cart cart--empty'>
                     <h2>
-                        Корзина пустая <icon>😕</icon>
+                        Корзина пустая <span>😕</span>
                     </h2>
                     <p>
                         Вероятней всего, вы не выбрали ни одну игру.
@@ -22,6 +22,6 @@ function CartEmpty() {
             </div>
         </div>
     );
-}
+};
 
 export default CartEmpty;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -5,12 +6,15 @@ import logo from '../../img/gamepad.svg';
 import Search from '../Search/Search';
 import { selectCart } from '../../redux/slices/cartSlice';
 
-function Header() {
+const Header: React.FC = () => {
     const { items, totalPrice } = useSelector(selectCart);
 
     const location = useLocation();
 
-    const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+    const totalCount = items.reduce(
+        (sum: number, item: any) => sum + item.count,
+        0
+    );
 
     return (
         <div className='header'>
@@ -64,6 +68,6 @@ function Header() {
             </div>
         </div>
     );
-}
+};
 
 export default Header;

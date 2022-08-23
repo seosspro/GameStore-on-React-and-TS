@@ -1,12 +1,24 @@
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectCartItemById } from '../../redux/cart/selectors';
 
 import { addItem } from '../../redux/slices/cartSlice';
 
-function GameBlock({ id, title, price, imageUrl }) {
+type GameBlockProps = {
+    id: string;
+    title: string;
+    price: number;
+    imageUrl: string;
+};
+
+const GameBlock: React.FC<GameBlockProps> = ({
+    id,
+    title,
+    price,
+    imageUrl,
+}) => {
     const dispatch = useDispatch();
-    const cartItem = useSelector(state =>
-        state.cart.items.find(obj => obj.id === id)
-    );
+    const cartItem = useSelector(selectCartItemById(id));
 
     const addedCount = cartItem ? cartItem.count : 0;
 
@@ -49,6 +61,6 @@ function GameBlock({ id, title, price, imageUrl }) {
             </div>
         </div>
     );
-}
+};
 
 export default GameBlock;
