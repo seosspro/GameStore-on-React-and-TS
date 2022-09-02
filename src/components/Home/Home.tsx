@@ -13,27 +13,27 @@ import Sort from '../Sort/Sort';
 import Preloader from '../GameBlock/Preloader';
 import GameBlock from '../GameBlock/GameBlock';
 import Pagination from '../Pagination/Pagination';
-import { list } from './../Sort/Sort';
+import { list } from '../Sort/Sort';
 import { fetchGames } from '../../redux/slices/gamesSlice';
 
-function Home() {
+const Home: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
     const { categoryId, sort, currentPage, searchValue } = useSelector(
-        state => state.filter
+        (state: any) => state.filter
     );
 
-    const { items, status } = useSelector(state => state.games);
+    const { items, status } = useSelector((state: any) => state.games);
 
-    const onChangeCategory = React.useCallback(idx => {
+    const onChangeCategory = React.useCallback((idx: number) => {
         dispatch(setCategoryId(idx));
     }, []);
 
-    const onPageChange = num => {
-        dispatch(setCurrentPage(num));
+    const onPageChange = (page: number) => {
+        dispatch(setCurrentPage(page));
     };
 
     const getGames = async () => {
@@ -43,6 +43,7 @@ function Home() {
         const search = searchValue ? `&search=${searchValue}` : '';
 
         dispatch(
+            //@ts-ignore
             fetchGames({
                 order,
                 sortBy,
@@ -88,7 +89,7 @@ function Home() {
     useEffect(() => {
         getGames();
     }, [categoryId, sort.sortProperty, searchValue, currentPage]);
-    const games = items.map(obj => (
+    const games = items.map((obj: any) => (
         <NavLink key={obj.id} to={`/Game/${obj.id}`}>
             <GameBlock {...obj} />
         </NavLink>
@@ -124,6 +125,6 @@ function Home() {
             </div>
         </div>
     );
-}
+};
 
 export default Home;

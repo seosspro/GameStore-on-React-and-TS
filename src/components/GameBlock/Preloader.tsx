@@ -2,7 +2,7 @@ import React from 'react';
 
 import ContentLoader from 'react-content-loader';
 
-const Preloader = props => (
+const Preloader = (props: any) => (
     <ContentLoader
         className='game-block'
         speed={2}

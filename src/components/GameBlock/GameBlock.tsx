@@ -18,7 +18,7 @@ const GameBlock: React.FC<GameBlockProps> = ({
     imageUrl,
 }) => {
     const dispatch = useDispatch();
-    const cartItem = useSelector(selectCartItemById(id));
+    const cartItem: any = useSelector(selectCartItemById(id));
 
     const addedCount = cartItem ? cartItem.count : 0;
 
