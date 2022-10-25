@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCartItemById } from '../../redux/cart/selectors';
+import { NavLink } from 'react-router-dom';
 
-import { addItem } from '../../redux/slices/cartSlice';
+import { addItem, cartItem } from '../../redux/slices/cartSlice';
 
 type GameBlockProps = {
     id: string;
@@ -23,11 +24,12 @@ const GameBlock: React.FC<GameBlockProps> = ({
     const addedCount = cartItem ? cartItem.count : 0;
 
     const onClickAdd = () => {
-        const item = {
+        const item: cartItem = {
             id,
             title,
             price,
             imageUrl,
+            count: 0,
         };
         dispatch(addItem(item));
     };
@@ -35,8 +37,10 @@ const GameBlock: React.FC<GameBlockProps> = ({
     return (
         <div className='game-block-wrapper'>
             <div className='game-block'>
+            <NavLink key={id} to={`/Game/${id}`}>
                 <img className='game-block__image' src={imageUrl} alt='game' />
                 <h4 className='game-block__title'>{title}</h4>
+                </NavLink>
                 <div className='game-block__bottom'>
                     <div className='game-block__price'>{price} ₽</div>
                     <button

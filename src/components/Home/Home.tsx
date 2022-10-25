@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux/es/exports';
+import { useSelector } from 'react-redux/es/exports';
+import { useAppDispatch } from '../../redux/store';
 import { useNavigate, NavLink } from 'react-router-dom';
 import QueryString from 'qs';
 
@@ -14,11 +15,11 @@ import Preloader from '../GameBlock/Preloader';
 import GameBlock from '../GameBlock/GameBlock';
 import Pagination from '../Pagination/Pagination';
 import { list } from '../Sort/Sort';
-import { fetchGames } from '../../redux/slices/gamesSlice';
+import { fetchGames, SearchGameParams } from '../../redux/slices/gamesSlice';
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
@@ -43,7 +44,6 @@ const Home: React.FC = () => {
         const search = searchValue ? `&search=${searchValue}` : '';
 
         dispatch(
-            //@ts-ignore
             fetchGames({
                 order,
                 sortBy,
@@ -54,45 +54,43 @@ const Home: React.FC = () => {
         );
     };
 
-    useEffect(() => {
-        if (isMounted.current) {
-            const queryString = QueryString.stringify({
-                sortProperty: sort.sortProperty,
-                categoryId,
-                currentPage,
-            });
+    // useEffect(() => {
+    //     if (isMounted.current) {
+    //         const queryString = QueryString.stringify({
+    //             sortProperty: sort.sortProperty,
+    //             categoryId,
+    //             currentPage,
+    //         });
 
-            navigate(`?${queryString}`);
-            isMounted.current = true;
-        }
-    }, []);
+    //         navigate(`?${queryString}`);
+    //         isMounted.current = true;
+    //     }
+    // }, []);
 
-    useEffect(() => {
-        if (window.location.search) {
-            const params = QueryString.parse(
-                window.location.search.substring(1)
-            );
-            const sort = list.find(
-                obj => obj.sortProperty === params.sortProperty
-            );
+    // useEffect(() => {
+    //     if (window.location.search) {
+    //         const params = QueryString.parse(
+    //             window.location.search.substring(1)
+    //         ) as unknown as SearchGameParams;
+    //         const sort = list.find(obj => obj.sortProperty === params.sortBy);
 
-            dispatch(
-                setFilters({
-                    ...params,
-                    sort,
-                })
-            );
-            isSearch.current = true;
-        }
-    }, []);
+    //         dispatch(
+    //             setFilters({
+    //                 categoryId: Number(params.category),
+    //                 searchValue: params.search,
+    //                 currentPage: Number(params.currentPage),
+    //                 sort: sort || list[0],
+    //             })
+    //         );
+    //         isSearch.current = true;
+    //     }
+    // }, []);
 
     useEffect(() => {
         getGames();
     }, [categoryId, sort.sortProperty, searchValue, currentPage]);
     const games = items.map((obj: any) => (
-        <NavLink key={obj.id} to={`/Game/${obj.id}`}>
             <GameBlock {...obj} />
-        </NavLink>
     ));
     const skeletons = [...new Array(6)].map((_, index) => (
         <Preloader key={index} />

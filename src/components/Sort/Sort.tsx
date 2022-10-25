@@ -1,21 +1,25 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
 
-import { selectSort, setSort } from '../../redux/slices/filterSlice';
+import {
+    selectSort,
+    setSort,
+    SortPropertyEnum,
+} from '../../redux/slices/filterSlice';
 
 type ListItem = {
     name: string;
-    sortProperty: string;
+    sortProperty: SortPropertyEnum;
 };
 
 export const list: ListItem[] = [
-    { name: 'популярности (DESC)', sortProperty: 'rating' },
-    { name: 'популярности (ASC)', sortProperty: '-rating' },
-    { name: 'цене (DESC)', sortProperty: 'price' },
-    { name: 'цене (ASC)', sortProperty: '-price' },
+    { name: 'популярности (DESC)', sortProperty: SortPropertyEnum.RATING_DESC },
+    { name: 'популярности (ASC)', sortProperty: SortPropertyEnum.RATING_ASC },
+    { name: 'цене (DESC)', sortProperty: SortPropertyEnum.PRICE_DESC },
+    { name: 'цене (ASC)', sortProperty: SortPropertyEnum.PRICE_ASC },
 ];
 
-const Sort: React.FC = () => {
+const SortPopUp: React.FC = () => {
     const dispatch = useDispatch();
     const sort = useSelector(selectSort);
     const sortRef = useRef<HTMLDivElement>(null);
@@ -27,9 +31,14 @@ const Sort: React.FC = () => {
         setOpen(false);
     };
 
+    type PopupClick = MouseEvent & {
+        path: Node[];
+    };
+
     useEffect(() => {
-        const handleCkickOutside = (event: any) => {
-            if (!event.path.includes(sortRef.current)) {
+        const handleCkickOutside = (event: MouseEvent) => {
+            const _event = event as PopupClick;
+            if (sortRef.current && !_event.path.includes(sortRef.current)) {
                 setOpen(false);
             }
         };
@@ -80,4 +89,4 @@ const Sort: React.FC = () => {
     );
 };
 
-export default Sort;
+export default SortPopUp;
