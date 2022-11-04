@@ -8,16 +8,14 @@ import FullGame from './components/FullGame/FullGame';
 
 import './scss/app.scss';
 
-function App() {
-    return (
-        <Routes>
-            <Route path='/' element={<MainLayouts />}>
-                <Route path='' element={<Home />} />
-                <Route path='Cart/*' element={<Cart />} />
-                <Route path='Game/:id' element={<FullGame />} />
-            </Route>
-        </Routes>
-    );
-}
+const App = () => (
+  <Routes>
+    <Route path='/' element={<MainLayouts/>}>
+      <Route path='' element={<Home/>}/>
+      <Route path='Cart/*' element={<Cart/>}/>
+      <Route path='Game/:id' element={<FullGame/>}/>
+    </Route>
+  </Routes>
+);
 
 export default App;

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useWhyDidYouUpdate} from "ahooks";
 
 type CategoriesProps = {
     value: number;
@@ -6,22 +7,24 @@ type CategoriesProps = {
 };
 const categories = ['Все', 'Экшен', 'Приключения', 'Стратегии', 'Гонки'];
 
-const Categories: React.FC<CategoriesProps> = ({ value, onChangeCategory }) => {
+const Categories: React.FC<CategoriesProps> = React.memo(({value, onChangeCategory}) => {
+    useWhyDidYouUpdate('Categories', {value, onChangeCategory})
+
     return (
-        <div className='categories'>
-            <ul>
-                {categories.map((categoryName, i) => (
-                    <li
-                        key={i}
-                        onClick={() => onChangeCategory(i)}
-                        className={value === i ? 'active' : ''}
-                    >
-                        {categoryName}
-                    </li>
-                ))}
-            </ul>
-        </div>
+            <div className='categories'>
+                <ul>
+                    {categories.map((categoryName, i) => (
+                            <li
+                                    key={i}
+                                    onClick={() => onChangeCategory(i)}
+                                    className={value === i ? 'active' : ''}
+                            >
+                                {categoryName}
+                            </li>
+                    ))}
+                </ul>
+            </div>
     );
-};
+})
 
 export default Categories;
