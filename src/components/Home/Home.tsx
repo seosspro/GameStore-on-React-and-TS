@@ -69,7 +69,7 @@ const Home: React.FC = () => {
                                 value={categoryId}
                                 onChangeCategory={onChangeCategory}
                         />
-                        <Sort/>
+                        <Sort value={sort}/>
                     </div>
                     <h2 className='content__title'>Все игры</h2>
                     {status === 'error' ? (
